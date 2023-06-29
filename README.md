@@ -18,10 +18,10 @@
 ## Task #3
 Before you start creating the source code, make sure you understand the Object-Oriented Programming (OOP) principles, which are essential for building a well-structured Java program.
 To complete this task, you will need to create the following classes:
-1. `Product`: This class should have three fields - `name`, `rate`, and `price`.
-2. `Category`: This class should have a `name` field to represent a product category and a list of `Product` objects.
+1. `com.coherentsolutions.entities.Product`: This class should have three fields - `name`, `rate`, and `price`.
+2. `Category`: This class should have a `name` field to represent a product category and a list of `com.coherentsolutions.entities.Product` objects.
 3. `Store`: This class should have a list of `Category` objects to represent the various product categories available in the store.
-4. `RandomProductGenerator`: A utility class that uses the `Faker` library to generate a `Product` with random field values. The method for generating product names should use different fakers for different subcategories.
+4. `RandomProductGenerator`: A utility class that uses the `Faker` library to generate a `com.coherentsolutions.entities.Product` with random field values. The method for generating product names should use different fakers for different subcategories.
 5. `RandomStorePopulator`: A utility class that populates the `Store` and `Category` objects with generated data.
 6. `StoreApp`: A class with a main method that runs the store scenario. When you run the main method, the application should initialize the store with categories and products and then display the store data in a readable format.
 In addition to these classes, create at least three subclasses of the `Category` class. Each subclass should represent a different product category, such as bikes, phones, milk, or any other category you like. You can explore the various fakers in the `Faker` library for inspiration. Be creative when choosing category names!
@@ -33,7 +33,7 @@ When printing the store's content, you may need to override the `toString()` met
 ### Where to put classes?
 To keep the project organized, it's recommended to put classes in relevant modules:
 - `StoreApp`: This module contains the `StoreApp` class with the `main()` method. Its purpose is to run the store by creating an instance of `Store`, filling it with products, and printing all the categories and products. All the code related to running the store should be placed in this module.
-- `Product`, `Category`, `BookCategory`, `PhoneCategory`, `FoodCategory`: These classes should be placed in the `domain` module. This module should contain only domain classes that answer the question: "What is contained in the store?" In the future, you could add classes like `User`, `Admin`, `Cart`, etc. in this module.
+- `com.coherentsolutions.entities.Product`, `Category`, `BookCategory`, `PhoneCategory`, `FoodCategory`: These classes should be placed in the `domain` module. This module should contain only domain classes that answer the question: "What is contained in the store?" In the future, you could add classes like `User`, `Admin`, `Cart`, etc. in this module.
 - `Store`, `RandomStorePopulator`: These classes should be placed in the store module. This module should contain all the business logic that answers the question: "How is the business logic implemented?" You may add interfaces, database connection logic, and other auxiliary classes in this module. Consider creating an auxiliary class like `StoreHelper` to transfer part of the business logic from `Store`, so that the `Store` class complies with the `Single Responsibility` principle and doesn't contain many loosely related methods.
 ### Package names
 You can name the packages in modules as follows: 
