@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductGenerator implements IProductGenerator{
+    private Faker faker;
+
+    public ProductGenerator(){
+        faker = new Faker();
+    }
 
     @Override
     public <T extends Product> List<Category<T>> generateProducts(List<Category<T>> categories){
@@ -27,7 +32,6 @@ public class ProductGenerator implements IProductGenerator{
     }
 
     private List<Food> generateFood(int count){
-        Faker faker = new Faker();
         ArrayList<Food> products = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
@@ -44,7 +48,6 @@ public class ProductGenerator implements IProductGenerator{
     }
 
     private List<Book> generateBook(int count){
-        Faker faker = new Faker();
         ArrayList<Book> products = new ArrayList<Book>();
 
         for (int i = 0; i < count; i++) {
