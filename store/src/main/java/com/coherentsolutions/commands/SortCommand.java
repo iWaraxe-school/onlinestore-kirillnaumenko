@@ -28,17 +28,6 @@ public class SortCommand implements ICommand {
             allProducts.addAll(categoryProducts);
         }
 
-//        var comparator = Comparator.comparing(Product:: getName)
-//                .thenComparing(Product::getPrice);
-//
-//        if (sortingRules.get("name").equals(SortOptions.DESC)) comparator = comparator.reversed();
-//
-//        comparator = comparator.thenComparing(Product::getPrice);
-//        if (sortingRules.get("price").equals(SortOptions.DESC)) {
-//            comparator = comparator.thenComparing(Product::getPrice).reversed();
-//        }
-
-        //Collections.sort(allProducts, comparator);
         allProducts.sort(new ProductComparator(sortingRules));
         allProducts.forEach(System.out::println);
     }
