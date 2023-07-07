@@ -1,13 +1,13 @@
 package com.coherentsolutions.products;
 
 public class Food extends Product{
-    private String Producer;
+    private String producer;
 
     public String getProducer() {
-        return Producer;
+        return producer;
     }
 
     public void setProducer(String producer) {
-        Producer = producer;
+        producer = producer;
     }
 }
