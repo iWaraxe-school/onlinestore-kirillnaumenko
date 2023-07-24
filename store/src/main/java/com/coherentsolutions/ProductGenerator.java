@@ -5,6 +5,8 @@ import com.coherentsolutions.interfaces.IProductGenerator;
 import com.coherentsolutions.products.Book;
 import com.coherentsolutions.products.Food;
 import com.coherentsolutions.products.Product;
+import com.coherentsolutions.products.builders.BookBuilder;
+import com.coherentsolutions.products.builders.FoodBuilder;
 import com.github.javafaker.Faker;
 
 import java.util.ArrayList;
@@ -12,20 +14,22 @@ import java.util.List;
 
 public class ProductGenerator implements IProductGenerator{
     private Faker faker;
+    private Configuration configuration;
 
-    public ProductGenerator(){
+    public ProductGenerator()
+    {
         faker = new Faker();
+        configuration = Configuration.getInstance();
     }
 
     @Override
     public <T extends Product> List<Category<T>> generateProducts(List<Category<T>> categories){
         for (Category category: categories) {
             var categoryName = category.getClass().getSimpleName();
-            var count = 5;
             switch (categoryName) {
-                case "BookCategory" -> category.addProducts(generateBook(count));
-                case "FoodCategory" -> category.addProducts(generateFood(count));
-                default -> category.addProducts(generateRandomProduct(count));
+                case "BookCategory" -> category.addProducts(generateBook(configuration.productCount));
+                case "FoodCategory" -> category.addProducts(generateFood(configuration.productCount));
+                default -> category.addProducts(generateRandomProduct(configuration.productCount));
             }
         }
             return categories;
@@ -35,11 +39,12 @@ public class ProductGenerator implements IProductGenerator{
         ArrayList<Food> products = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            Food product = new Food();
-            product.setName(faker.food().fruit());
-            product.setProducer(faker.company().name());
-            product.setRate(faker.number().randomDouble(1, 0, 5));
-            product.setPrice(faker.number().randomDouble(2, 1, 1000));
+            var product = new FoodBuilder()
+                    .setName(faker.book().title())
+                    .setProducer(faker.company().name())
+                    .setPrice(faker.number().randomDouble(2, 1, 1000))
+                    .setRate(faker.number().randomDouble(1, 0, 5))
+                    .build();
 
             products.add(product);
         }
@@ -51,11 +56,12 @@ public class ProductGenerator implements IProductGenerator{
         ArrayList<Book> products = new ArrayList<Book>();
 
         for (int i = 0; i < count; i++) {
-            Book product = new Book();
-            product.setName(faker.book().title());
-            product.setAuthor(faker.book().author());
-            product.setRate(faker.number().randomDouble(1, 0, 5));
-            product.setPrice(faker.number().randomDouble(2, 1, 1000));
+            var product = new BookBuilder()
+                    .setName(faker.book().title())
+                    .setAuthor(faker.book().author())
+                    .setPrice(faker.number().randomDouble(2, 1, 1000))
+                    .setRate(faker.number().randomDouble(1, 0, 5))
+                    .build();
 
             products.add(product);
         }
