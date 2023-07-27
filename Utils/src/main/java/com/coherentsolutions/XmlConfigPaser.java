@@ -58,4 +58,19 @@ public class XmlConfigPaser
 
         return productCount;
     }
+
+    public static int GetThreadCount(){
+
+        int threadCount = 0;
+        try {
+            var xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse("consoleApp/src/main/resources/config.xml");
+            var xmlProductCount = xml.getDocumentElement().getElementsByTagName("threadcount").item(0).getTextContent();
+            threadCount = Integer.parseInt(xmlProductCount);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return threadCount;
+    }
 }

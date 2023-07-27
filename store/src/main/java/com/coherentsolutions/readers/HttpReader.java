@@ -3,6 +3,7 @@ package com.coherentsolutions.readers;
 import com.coherentsolutions.categories.Category;
 import com.coherentsolutions.interfaces.ISourceReader;
 
+import java.util.Collections;
 import java.util.List;
 
 public class HttpReader implements ISourceReader {
@@ -10,6 +11,6 @@ public class HttpReader implements ISourceReader {
     public List<Category> readCategories() {
 
         // Read some categories from Http
-        return null;
+        return Collections.EMPTY_LIST;
     }
 }
