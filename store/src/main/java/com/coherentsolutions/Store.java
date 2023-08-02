@@ -8,10 +8,12 @@ import java.util.List;
 
 public class Store <T extends Product> {
     private String name;
+    private ShoppingCart cart;
     private List<Category<T>> categories;
     public Store(){
         name = new Faker().company().name();
         categories = new ArrayList<>();
+        cart = new ShoppingCart();
     }
 
     public List<Category<T>> getCategories() {
@@ -26,6 +28,25 @@ public class Store <T extends Product> {
     }
     public void addCategories(List<Category<T>> categories) {
         this.categories.addAll(categories);
+    }
+
+    public ShoppingCart getCart() {
+        return cart;
+    }
+
+    public void setCart(ShoppingCart cart) {
+        this.cart = cart;
+    }
+
+    public List<Product> GetAllProducts(){
+        var allProducts = new ArrayList<Product>();
+
+        for (var category: getCategories()) {
+            var categoryProducts = category.getProducts();
+            allProducts.addAll(categoryProducts);
+        }
+
+        return allProducts;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.coherentsolutions.readers;
 import com.coherentsolutions.categories.Category;
 import com.coherentsolutions.interfaces.ISourceReader;
 
+import java.util.Collections;
 import java.util.List;
 
 public class DatabaseReader implements ISourceReader {
@@ -10,6 +11,6 @@ public class DatabaseReader implements ISourceReader {
     public List<Category> readCategories() {
 
         // Read some categories from DB
-        return null;
+        return Collections.<Category>emptyList();
     }
 }

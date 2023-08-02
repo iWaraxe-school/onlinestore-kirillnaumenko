@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <sort>
+        <name>desc</name>
+        <price>asc</price>
+        <rate>asc</rate>
+    </sort>
+    <parameters>
+        <datasource>reflection</datasource>
+        <productcount>10</productcount>
+        <threadcount>5</threadcount>>
+    </parameters>
+</settings>
