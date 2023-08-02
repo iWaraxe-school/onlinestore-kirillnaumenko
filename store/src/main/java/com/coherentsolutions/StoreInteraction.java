@@ -5,49 +5,28 @@ import com.coherentsolutions.commands.*;
 import java.util.Scanner;
 
 public class StoreInteraction {
-
     private StoreInteraction(){}
     public static void LaunchStore(Store store){
         var quitFlag = true;
-        var showCommand = new ShowProductsCommand(store);
-        var sortCommand = new SortCommand(store);
-        var topCommand = new TopCommand(store);
-        var orderCommand = new OrderCommand(store);
-        var quitCommand = new QuitCommand();
-        var defaultCommand = new DefaultCommand();
+        var commandPool = new CommandPool();
+        commandPool.addCommand("show", new ShowProductsCommand(store));
+        commandPool.addCommand("sort", new SortCommand(store));
+        commandPool.addCommand("top", new TopCommand(store));
+        commandPool.addCommand("order", new OrderCommand(store));
+        commandPool.addCommand("quit", new QuitCommand());
+
         System.out.println("Enter 'quit' for exit");
         System.out.println("Please enter your command:");
-        var input = new Scanner(System.in);
-        while (quitFlag) {
-            var line = input.nextLine();
-            switch (line) {
-                case "show": {
-                    showCommand.execute();
-                    break;
-                }
-                case "sort": {
-                    sortCommand.execute();
-                    break;
-                }
-                case "top": {
-                    topCommand.execute();
-                    break;
-                }
 
-                case "order": {
-                    orderCommand.execute();
-                    break;
-                }
-                case "quit": {
-                    quitFlag = false;
-                    input.close();
-                    quitCommand.execute();
-                    break;
-                }
-                default: {
-                    defaultCommand.execute();
-                    break;
-                }
+        var scanner = new Scanner(System.in);
+        while (quitFlag) {
+            var input = scanner.nextLine();
+            if (input.equalsIgnoreCase("quit")){
+                quitFlag = false;
+                scanner.close();
+                commandPool.executeCommand(input);
+            }else{
+                commandPool.executeCommand(input);
             }
         }
     }

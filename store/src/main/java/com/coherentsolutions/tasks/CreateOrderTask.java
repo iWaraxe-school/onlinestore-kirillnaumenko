@@ -19,17 +19,10 @@ public class CreateOrderTask implements Runnable{
 
     @Override
     public void run() {
-        while (true) {
-            try {
-                var randomProduct = Randomizer.selectRandomElement(products);
-                cart.addProduct(randomProduct);
+        var randomProduct = Randomizer.selectRandomElement(products);
+        cart.addProduct(randomProduct);
 
-                System.out.println(MessageFormat.format("Adding {0} to shopping cart...", randomProduct.getName()));
-                System.out.println(cart.toString());
-                TimeUnit.SECONDS.sleep(10);
-            } catch (InterruptedException ignored) {
-
-            }
-        }
+        System.out.println(MessageFormat.format("Adding {0} to shopping cart...", randomProduct.getName()));
+        System.out.println(cart.toString());
     }
 }

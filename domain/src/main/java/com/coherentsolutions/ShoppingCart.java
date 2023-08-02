@@ -1,24 +1,22 @@
 package com.coherentsolutions;
 
-import com.coherentsolutions.products.Product;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ShoppingCart<T extends Product>{
-    public ConcurrentLinkedQueue<T> products;
+public class ShoppingCart<Product>{
+    public List<Product> products;
 
     public ShoppingCart(){
-        this.products = new ConcurrentLinkedQueue<>();
+        this.products = new ArrayList<Product>();
     }
 
-    public void addProduct(T product){
+    public void addProduct(Product product){
         this.products.add(product);
     }
-    public void addProducts(List<T> products){
+    public void addProducts(List<Product> products){
         this.products.addAll(products);
     }
-
     @Override
     public String toString() {
         var builder = new StringBuilder();

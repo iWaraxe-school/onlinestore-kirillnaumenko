@@ -38,6 +38,17 @@ public class Store <T extends Product> {
         this.cart = cart;
     }
 
+    public List<Product> GetAllProducts(){
+        var allProducts = new ArrayList<Product>();
+
+        for (var category: getCategories()) {
+            var categoryProducts = category.getProducts();
+            allProducts.addAll(categoryProducts);
+        }
+
+        return allProducts;
+    }
+
     @Override
     public String toString() {
         var builder = new StringBuilder();

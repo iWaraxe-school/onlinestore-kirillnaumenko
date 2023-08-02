@@ -11,6 +11,6 @@ public class DatabaseReader implements ISourceReader {
     public List<Category> readCategories() {
 
         // Read some categories from DB
-        return Collections.EMPTY_LIST;
+        return Collections.<Category>emptyList();
     }
 }

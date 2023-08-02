@@ -1,29 +1,63 @@
 package com.coherentsolutions;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.util.Map;
 
 public class Configuration {
-
-    private static Configuration instance;
+    public String configPath;
     public Map<String, SortOptions> sortOptions;
     public DataSource dataSource;
     public int productCount;
     public int threadCount;
+    public XmlConfigParser parser;
 
-    private Configuration(){
-        sortOptions = XmlConfigPaser.GetSorting();
-        dataSource = XmlConfigPaser.GetDataSource();
-        productCount = XmlConfigPaser.GetProductCount();
-        threadCount = XmlConfigPaser.GetThreadCount();
+    private Configuration() throws ParserConfigurationException {
+        configPath = LoadConfiguration();
+        parser = new XmlConfigParser(configPath);
+        sortOptions = parser.GetSorting();
+        dataSource = parser.GetDataSource().get();
+        productCount = parser.GetProductCount();
+        threadCount = parser.GetThreadCount();
     }
 
-    public static synchronized Configuration getInstance() {
-        if (instance == null) {
-            instance = new Configuration();
+    // Since Java class loader is thread safe, this code should provide lazy initialization and thread safe config loader
+    private static class ConfigurationV2Loader {
+        private static final Configuration INSTANCE;
+
+        static {
+            try {
+                INSTANCE = new Configuration();
+            } catch (ParserConfigurationException e) {
+                throw new RuntimeException(e);
+            }
         }
-        return instance;
     }
 
+    public static Configuration getInstance() {
+
+        return ConfigurationV2Loader.INSTANCE;
+    }
+
+    private String LoadConfiguration(){
+        // Pass required config file using IC/CD or CLI command
+        // java -Dconfig.file={path to config}
+        String configFileLocation = System.getProperty("config.file");
+
+        if (configFileLocation == null) {
+            System.out.println("There is no provided configuration file. Using default path.");
+            configFileLocation = "consoleApp/src/main/resources/dev.config.xml";
+        }
+
+        File configFile = new File(configFileLocation);
+
+        if (!configFile.exists()) {
+            System.err.println("Config file does not exist.");
+            System.exit(1);
+        }
+
+        System.out.println("Loaded config:" + configFile.getAbsolutePath());
+
+        return configFileLocation;
+    }
 }

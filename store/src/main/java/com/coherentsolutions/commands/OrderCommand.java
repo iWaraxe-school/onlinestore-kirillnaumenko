@@ -1,17 +1,12 @@
 package com.coherentsolutions.commands;
 
-import com.coherentsolutions.Configuration;
 import com.coherentsolutions.Store;
-import com.coherentsolutions.categories.Category;
+import com.coherentsolutions.ThreadPoolManager;
 import com.coherentsolutions.interfaces.ICommand;
-import com.coherentsolutions.products.Product;
 import com.coherentsolutions.tasks.CartCleanerTask;
 import com.coherentsolutions.tasks.CreateOrderTask;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.*;
 
 public class OrderCommand implements ICommand {
     private Store store;
@@ -20,23 +15,11 @@ public class OrderCommand implements ICommand {
     }
     @Override
     public void execute() {
-        var allProducts = new ArrayList<Product>();
+        var allProducts = store.GetAllProducts();
 
-        for (var category: store.getCategories()) {
-            var categoryProducts = ((Category<Product>)category).getProducts();
-            allProducts.addAll(categoryProducts);
-        }
+        ScheduledExecutorService threadPool = ThreadPoolManager.scheduledThreadPool;
 
-        ExecutorService threadPool = Executors.newFixedThreadPool(Configuration.getInstance().threadCount,
-                new ThreadFactory() {
-                    public Thread newThread(Runnable r) {
-                        Thread t = Executors.defaultThreadFactory().newThread(r);
-                        t.setDaemon(true);
-                        return t;
-                    }
-                });
-
-        threadPool.submit(new CreateOrderTask(store.getCart(), allProducts));
-        threadPool.submit(new CartCleanerTask(store.getCart()));
+        threadPool.scheduleAtFixedRate(new CreateOrderTask(store.getCart(), allProducts), 0, 5, TimeUnit.SECONDS);
+        threadPool.scheduleAtFixedRate(new CartCleanerTask(store.getCart()), 30, 30, TimeUnit.SECONDS);
     }
 }

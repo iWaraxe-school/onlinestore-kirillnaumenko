@@ -7,7 +7,7 @@
     </sort>
     <parameters>
         <datasource>reflection</datasource>
-        <productcount>5</productcount>>
+        <productcount>5</productcount>
         <threadcount>5</threadcount>>
     </parameters>
 </settings>

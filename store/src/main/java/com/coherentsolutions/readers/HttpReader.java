@@ -11,6 +11,6 @@ public class HttpReader implements ISourceReader {
     public List<Category> readCategories() {
 
         // Read some categories from Http
-        return Collections.EMPTY_LIST;
+        return Collections.<Category>emptyList();
     }
 }

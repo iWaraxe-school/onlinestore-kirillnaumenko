@@ -13,14 +13,7 @@ public class CartCleanerTask implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            try {
-                System.out.println("Clearing shopping cart...");
-                TimeUnit.SECONDS.sleep(60);
-                cart.products.clear();
-            } catch (InterruptedException ignored) {
-
-            }
-        }
+        System.out.println("Clearing shopping cart...");
+        cart.products.clear();
     }
 }

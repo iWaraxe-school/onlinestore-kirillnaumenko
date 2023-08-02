@@ -1,13 +1,9 @@
 package com.coherentsolutions.commands;
 
+import com.coherentsolutions.Configuration;
 import com.coherentsolutions.Store;
-import com.coherentsolutions.XmlConfigPaser;
-import com.coherentsolutions.categories.Category;
 import com.coherentsolutions.comparators.ProductComparator;
 import com.coherentsolutions.interfaces.ICommand;
-import com.coherentsolutions.products.Product;
-
-import java.util.ArrayList;
 
 public class SortCommand implements ICommand {
     private Store store;
@@ -17,13 +13,8 @@ public class SortCommand implements ICommand {
 
     @Override
     public void execute() {
-        var sortingRules = XmlConfigPaser.GetSorting();
-        var allProducts = new ArrayList<Product>();
-
-        for (var category: store.getCategories()) {
-            var categoryProducts = ((Category<Product>)category).getProducts();
-            allProducts.addAll(categoryProducts);
-        }
+        var sortingRules = Configuration.getInstance().sortOptions;
+        var allProducts = store.GetAllProducts();
 
         allProducts.sort(new ProductComparator(sortingRules));
         allProducts.forEach(System.out::println);
