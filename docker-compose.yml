@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/azure-sql-edge
+    container_name: java-slq-database
+    ports:
+      - "1433:1433"
+    environment:
+      - SA_USER=sa
+      - SA_PASSWORD=@someComplicatedPassword
+      - ACCEPT_EULA=Y
+    expose:
+      - '1433'

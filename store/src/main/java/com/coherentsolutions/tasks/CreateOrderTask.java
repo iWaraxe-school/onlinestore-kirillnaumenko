@@ -1,12 +1,12 @@
 package com.coherentsolutions.tasks;
 
+import com.coherentsolutions.AppLogger;
 import com.coherentsolutions.Randomizer;
 import com.coherentsolutions.ShoppingCart;
 import com.coherentsolutions.products.Product;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class CreateOrderTask implements Runnable{
     private ShoppingCart cart;
@@ -19,6 +19,7 @@ public class CreateOrderTask implements Runnable{
 
     @Override
     public void run() {
+        AppLogger.getLogger().info("Create order task has been started...");
         var randomProduct = Randomizer.selectRandomElement(products);
         cart.addProduct(randomProduct);
 

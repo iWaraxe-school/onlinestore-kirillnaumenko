@@ -10,6 +10,7 @@ public class Store <T extends Product> {
     private String name;
     private ShoppingCart cart;
     private List<Category<T>> categories;
+
     public Store(){
         name = new Faker().company().name();
         categories = new ArrayList<>();
@@ -22,7 +23,6 @@ public class Store <T extends Product> {
     public void setCategories(List<Category<T>> categories) {
         this.categories = categories;
     }
-
     public void addCategory(Category<T> category) {
         this.categories.add(category);
     }
@@ -36,6 +36,14 @@ public class Store <T extends Product> {
 
     public void setCart(ShoppingCart cart) {
         this.cart = cart;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Product> GetAllProducts(){

@@ -4,7 +4,9 @@ import com.coherentsolutions.products.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Category <T extends Product> {
+public class Category <T extends Product> extends Product {
+
+    private int id;
     private String name;
     private List<T> products;
 
@@ -33,6 +35,14 @@ public abstract class Category <T extends Product> {
     }
     public void addProducts(List<T> products){
         this.products.addAll(products);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

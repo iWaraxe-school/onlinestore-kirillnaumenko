@@ -5,9 +5,15 @@
         <price>asc</price>
         <rate>asc</rate>
     </sort>
+    <database>
+        <url>localhost</url>
+        <database>master</database>
+        <user>sa</user>
+        <password>@someComplicatedPassword</password>
+    </database>
     <parameters>
         <datasource>reflection</datasource>
         <productcount>10</productcount>
-        <threadcount>5</threadcount>>
+        <threadcount>5</threadcount>
     </parameters>
 </settings>

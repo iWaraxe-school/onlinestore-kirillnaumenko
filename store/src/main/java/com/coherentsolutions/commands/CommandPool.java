@@ -1,5 +1,6 @@
 package com.coherentsolutions.commands;
 
+import com.coherentsolutions.AppLogger;
 import com.coherentsolutions.interfaces.ICommand;
 
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class CommandPool {
         if (command != null) {
             command.execute();
         } else {
+            AppLogger.getLogger().info(commandName + " is unknown command");
             System.out.println("I don't know this command yet");
         }
     }

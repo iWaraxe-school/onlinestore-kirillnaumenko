@@ -1,32 +1,68 @@
 package com.coherentsolutions;
 
+import com.coherentsolutions.categories.BookCategory;
 import com.coherentsolutions.categories.Category;
+import com.coherentsolutions.categories.FoodCategory;
+import com.coherentsolutions.dao.CategoryDao;
+import com.coherentsolutions.dao.ProductDao;
 import com.coherentsolutions.interfaces.ISourceReader;
 import com.coherentsolutions.products.Product;
 import com.coherentsolutions.readers.DatabaseReader;
 import com.coherentsolutions.readers.HttpReader;
 import com.coherentsolutions.readers.ReflectionReader;
+import com.coherentsolutions.services.DatabaseService;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class StoreHelper {
     private StoreHelper(){}
     public static void FillStoreWithCategories(Store store, DataSource dataSource) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         ISourceReader source;
+        List<Category<Product>> categories = new ArrayList<>();
+        ProductGenerator generator = new ProductGenerator();
         switch (dataSource){
-            case DATABASE -> source = new DatabaseReader();
-            case HTTP -> source = new HttpReader();
-            default -> source = new ReflectionReader();
-        }
+            case DATABASE:
+                // Generate database and fill it with categories with random products
+                DatabaseService.InitializeDatabase();
+                var categoryDao = new CategoryDao();
+                var productDao = new ProductDao();
 
-        var categories = source.readCategories();
-        var generator = new ProductGenerator();
-        generator.generateProducts(categories);
-        store.addCategories(categories);
-    }
+                var bookCategory = new BookCategory();
+                var books = generator.generateBook(5);
+                categoryDao.create(bookCategory);
+                for (var book: books) {
+                    book.setCategoryName(bookCategory.getName());
+                    productDao.create(book);
+                }
+
+                var foodCategory = new FoodCategory();
+                var foods = generator.generateFood(5);
+                categoryDao.create(foodCategory);
+                for (var food: foods) {
+                    food.setCategoryName(foodCategory.getName());
+                    productDao.create(food);
+                }
+
+                source = new DatabaseReader();
+                categories = source.readCategories();
+                store.addCategories(categories);
+
+                break;
+
+            case HTTP:
+                source = new HttpReader();
+                break;
+            default:
+                source = new ReflectionReader();
+                categories = source.readCategories();
+                generator.generateProducts(categories);
+                store.addCategories(categories);
+            }
+        }
 
     private static <T extends Product> ArrayList<Category<T>> readAllCategories() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         var categories = new ArrayList<Category<T>>();
