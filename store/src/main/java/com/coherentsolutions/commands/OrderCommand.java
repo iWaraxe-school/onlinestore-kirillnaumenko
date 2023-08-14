@@ -1,5 +1,6 @@
 package com.coherentsolutions.commands;
 
+import com.coherentsolutions.AppLogger;
 import com.coherentsolutions.Store;
 import com.coherentsolutions.ThreadPoolManager;
 import com.coherentsolutions.interfaces.ICommand;
@@ -15,6 +16,7 @@ public class OrderCommand implements ICommand {
     }
     @Override
     public void execute() {
+        AppLogger.getLogger().info("Initialize two background processes for product ordering...");
         var allProducts = store.GetAllProducts();
 
         ScheduledExecutorService threadPool = ThreadPoolManager.scheduledThreadPool;

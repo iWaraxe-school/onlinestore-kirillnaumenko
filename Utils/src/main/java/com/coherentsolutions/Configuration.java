@@ -7,6 +7,7 @@ import java.util.Map;
 public class Configuration {
     public String configPath;
     public Map<String, SortOptions> sortOptions;
+    public Map<DatabaseConnectionsOptions, String> databaseConnection;
     public DataSource dataSource;
     public int productCount;
     public int threadCount;
@@ -16,6 +17,7 @@ public class Configuration {
         configPath = LoadConfiguration();
         parser = new XmlConfigParser(configPath);
         sortOptions = parser.GetSorting();
+        databaseConnection = parser.GetDatabaseConnection();
         dataSource = parser.GetDataSource().get();
         productCount = parser.GetProductCount();
         threadCount = parser.GetThreadCount();

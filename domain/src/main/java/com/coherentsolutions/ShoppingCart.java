@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ShoppingCart<Product>{
-    public List<Product> products;
+    private List<Product> products;
 
     public ShoppingCart(){
         this.products = new ArrayList<Product>();
@@ -17,6 +17,19 @@ public class ShoppingCart<Product>{
     public void addProducts(List<Product> products){
         this.products.addAll(products);
     }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public void clearShoppingCart(){
+        this.products.clear();
+    }
+
     @Override
     public String toString() {
         var builder = new StringBuilder();

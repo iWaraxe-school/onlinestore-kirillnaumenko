@@ -1,6 +1,9 @@
 package com.coherentsolutions.products;
 
 public class Product {
+
+    private int id;
+    private String categoryName;
     private String name;
     private Double rate;
     private Double price;
@@ -27,6 +30,22 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     @Override

@@ -35,12 +35,12 @@ public class ProductGenerator implements IProductGenerator{
             return categories;
     }
 
-    private List<Food> generateFood(int count){
+    public List<Food> generateFood(int count){
         ArrayList<Food> products = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
             var product = new FoodBuilder()
-                    .setName(faker.book().title())
+                    .setName(faker.food().fruit())
                     .setProducer(faker.company().name())
                     .setPrice(faker.number().randomDouble(2, 1, 1000))
                     .setRate(faker.number().randomDouble(1, 0, 5))
@@ -52,7 +52,7 @@ public class ProductGenerator implements IProductGenerator{
         return products;
     }
 
-    private List<Book> generateBook(int count){
+    public List<Book> generateBook(int count){
         ArrayList<Book> products = new ArrayList<Book>();
 
         for (int i = 0; i < count; i++) {

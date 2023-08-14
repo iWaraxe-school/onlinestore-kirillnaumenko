@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class StoreInteraction {
     private StoreInteraction(){}
     public static void LaunchStore(Store store){
-        var quitFlag = true;
-        var commandPool = new CommandPool();
+        boolean quitFlag = true;
+        CommandPool commandPool = new CommandPool();
         commandPool.addCommand("show", new ShowProductsCommand(store));
         commandPool.addCommand("sort", new SortCommand(store));
         commandPool.addCommand("top", new TopCommand(store));
@@ -20,7 +20,7 @@ public class StoreInteraction {
 
         var scanner = new Scanner(System.in);
         while (quitFlag) {
-            var input = scanner.nextLine();
+            String input = scanner.nextLine();
             if (input.equalsIgnoreCase("quit")){
                 quitFlag = false;
                 scanner.close();
