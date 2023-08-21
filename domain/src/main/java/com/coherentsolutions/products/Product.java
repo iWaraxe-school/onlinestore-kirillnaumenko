@@ -1,5 +1,7 @@
 package com.coherentsolutions.products;
 
+import java.util.Objects;
+
 public class Product {
 
     private int id;
@@ -58,5 +60,21 @@ public class Product {
                 .append("Price: "+ price)
                 .append("\r\n\t");
         return builder.toString();
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return
+                Objects.equals(categoryName, product.categoryName) &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(rate, product.rate) &&
+                Objects.equals(price, product.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(categoryName, name, rate, price);
     }
 }

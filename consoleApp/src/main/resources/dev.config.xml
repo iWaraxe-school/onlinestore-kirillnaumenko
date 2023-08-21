@@ -11,8 +11,14 @@
         <user>sa</user>
         <password>@someComplicatedPassword</password>
     </database>
+    <webserver>
+        <url>localhost</url>
+        <port>8081</port>
+        <user>admin</user>
+        <password>password</password>
+    </webserver>
     <parameters>
-        <datasource>database</datasource>
+        <datasource>http</datasource>
         <productcount>5</productcount>
         <threadcount>5</threadcount>
     </parameters>

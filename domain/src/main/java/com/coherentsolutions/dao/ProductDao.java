@@ -18,8 +18,8 @@ public class ProductDao implements IProductDao<Product>{
                 product.setId(rs.getInt("Id"));
                 product.setCategoryName(rs.getString("CategoryName"));
                 product.setName(rs.getString("Name"));
-                product.setPrice((double) rs.getFloat("Price"));
-                product.setRate((double) rs.getFloat("Rate"));
+                product.setPrice(Double.valueOf(String.format("%.2f", rs.getFloat("Price"))));
+                product.setRate(Double.valueOf(String.format("%.2f", rs.getFloat("Rate"))));
 
                 allProducts.add(product);
             }
