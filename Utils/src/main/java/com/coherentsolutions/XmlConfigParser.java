@@ -68,6 +68,29 @@ public class XmlConfigParser {
         return map;
     }
 
+    public Map<WebServerConnectionOptions, String> GetWebServerConnection(){
+        Map<WebServerConnectionOptions, String> map = new LinkedHashMap<>();
+        try {
+            var xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(configPath);
+            var nodes = xml.getDocumentElement().getElementsByTagName("webserver").item(0).getChildNodes();
+
+            for (var i = 0; i < nodes.getLength(); i++) {
+                if (nodes.item(i) instanceof Element) {
+                    var key = WebServerConnectionOptions.valueOfIgnoreCase(nodes.item(i).getNodeName());
+                    var value = nodes.item(i).getTextContent();
+
+                    map.put(key, value);
+                }
+            }
+        }catch (ParserConfigurationException | IOException e){
+            AppLogger.getLogger().error(e.toString());
+        }catch (Exception e){
+            AppLogger.getLogger().error(e.toString());
+        }
+
+        return map;
+    }
+
     public Optional<DataSource> GetDataSource() throws ParserConfigurationException {
 
         try {

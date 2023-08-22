@@ -11,6 +11,12 @@
         <user>sa</user>
         <password>@someComplicatedPassword</password>
     </database>
+    <webserver>
+        <url>localhost</url>
+        <port>8081</port>
+        <user>admin</user>
+        <password>password</password>
+    </webserver>
     <parameters>
         <datasource>reflection</datasource>
         <productcount>10</productcount>

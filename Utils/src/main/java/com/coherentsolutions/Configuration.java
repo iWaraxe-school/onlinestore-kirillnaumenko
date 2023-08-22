@@ -8,6 +8,7 @@ public class Configuration {
     public String configPath;
     public Map<String, SortOptions> sortOptions;
     public Map<DatabaseConnectionsOptions, String> databaseConnection;
+    public Map<WebServerConnectionOptions, String> webserverConnection;
     public DataSource dataSource;
     public int productCount;
     public int threadCount;
@@ -18,6 +19,7 @@ public class Configuration {
         parser = new XmlConfigParser(configPath);
         sortOptions = parser.GetSorting();
         databaseConnection = parser.GetDatabaseConnection();
+        webserverConnection = parser.GetWebServerConnection();
         dataSource = parser.GetDataSource().get();
         productCount = parser.GetProductCount();
         threadCount = parser.GetThreadCount();

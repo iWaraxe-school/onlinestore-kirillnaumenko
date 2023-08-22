@@ -11,6 +11,8 @@ import com.coherentsolutions.readers.DatabaseReader;
 import com.coherentsolutions.readers.HttpReader;
 import com.coherentsolutions.readers.ReflectionReader;
 import com.coherentsolutions.services.DatabaseService;
+import com.coherentsolutions.services.HttpServer;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,7 +22,7 @@ import java.util.Set;
 
 public class StoreHelper {
     private StoreHelper(){}
-    public static void FillStoreWithCategories(Store store, DataSource dataSource) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    public static void FillStoreWithCategories(Store store, DataSource dataSource) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, JsonProcessingException {
         ISourceReader source;
         List<Category<Product>> categories = new ArrayList<>();
         ProductGenerator generator = new ProductGenerator();
@@ -54,8 +56,35 @@ public class StoreHelper {
                 break;
 
             case HTTP:
+                // Generate database, fill it with categories and start web server that get products from this database
+                DatabaseService.InitializeDatabase();
+                HttpServer.start(store);
+
+                categoryDao = new CategoryDao();
+                productDao = new ProductDao();
+
+                bookCategory = new BookCategory();
+                books = generator.generateBook(5);
+                categoryDao.create(bookCategory);
+                for (var book: books) {
+                    book.setCategoryName(bookCategory.getName());
+                    productDao.create(book);
+                }
+
+                foodCategory = new FoodCategory();
+                foods = generator.generateFood(5);
+                categoryDao.create(foodCategory);
+                for (var food: foods) {
+                    food.setCategoryName(foodCategory.getName());
+                    productDao.create(food);
+                }
+
                 source = new HttpReader();
+                categories = source.readCategories();
+                store.addCategories(categories);
+
                 break;
+
             default:
                 source = new ReflectionReader();
                 categories = source.readCategories();
